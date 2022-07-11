@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "title": "Libra awesome bag",
+    "description": "Libra Hand Gesture Tee",
+    "images": [
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114702-b682e886-7881-42d6-866a-be2aa8533847.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114709-bafd1303-17aa-4425-8811-5bda24c51cff.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114699-63627042-1606-4a9a-b2aa-8fe212c33930.jpg"
+      }
+    ],
+    "price": 100,
+    "currency": {
+      "id": "Native",
+      "symbol": "aUsd",
+      "decimals": 9
+    }
+  },
+  {
+    "id": 2,
+    "title": "Libra Hand Gesture Tee",
+    "description": "Libra Hand Gesture Tee",
+    "images": [
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114709-bafd1303-17aa-4425-8811-5bda24c51cff.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114699-63627042-1606-4a9a-b2aa-8fe212c33930.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114702-b682e886-7881-42d6-866a-be2aa8533847.jpg"
+      }
+    ],
+    "price": 100,
+    "currency": {
+      "id": "",
+      "symbol": "aUsd"
+    }
+  },
+  {
+    "id": 3,
+    "title": "Libra Horn Hand Gesture Bag",
+    "description": "Libra Hand Gesture Tee",
+    "images": [
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114709-bafd1303-17aa-4425-8811-5bda24c51cff.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114699-63627042-1606-4a9a-b2aa-8fe212c33930.jpg"
+      },
+      {
+        "url": "https://user-images.githubusercontent.com/92568442/178114702-b682e886-7881-42d6-866a-be2aa8533847.jpg"
+      }
+    ],
+    "price": 100,
+    "currency": {
+      "id": "",
+      "symbol": "aUsd"
+    }
+  }
+]
