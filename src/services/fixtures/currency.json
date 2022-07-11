@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Libra",
+    "symbol": "libra",
+    "currency_id": "Native"
+  },
+  {
+    "name": "Polkadot",
+    "symbol": "dot",
+    "currency_id": "Registered(0xbca6d965a24c7b1b58328a99e878f0292261d3fe0692d24087d4840098585576)"
+  },
+  {
+    "name": "Acala Usd",
+    "symbol": "ausd",
+    "currency_id": "Registered(0xbca6d965a24c7b1b58328a99e878f0292261d3fe0692d24087d4840098585576)"
+  }
+]

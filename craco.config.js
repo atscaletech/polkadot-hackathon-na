@@ -1,3 +1,5 @@
+const CracoLessPlugin = require('craco-less');
+
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
@@ -16,4 +18,22 @@ module.exports = {
       '@babel/plugin-proposal-object-rest-spread',
     ]
   },
+  plugins: [
+    {
+      plugin: CracoLessPlugin,
+      options: {
+        lessLoaderOptions: {
+          lessOptions: {
+            modifyVars: {
+              '@primary-color': '#04472D',
+              '@link-color': '#BCA9F1',
+              '@success-color': '#32C25E',
+              '@warning-color': '#FA554D',
+            },
+            javascriptEnabled: true,
+          },
+        },
+      },
+    },
+  ],
 };

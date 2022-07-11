@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Card, Divider, Typography } from 'antd';
 import { getAccounts } from '../../services/keystore';
-import { Keyring } from '@polkadot/keyring';
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 export default function AccountInfo() {
   const navigate = useNavigate();
