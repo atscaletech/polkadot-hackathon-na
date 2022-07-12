@@ -87,9 +87,11 @@ export class Libra {
           description, 
           receipt
         )
-        .signAndSend(fromAcct, (status) => {
+        .signAndSend(fromAcct, ({ status, events }) => {
           if (status.isFinalized) {
-            resolve();
+            const result = events.find(({ event })=> this.api.events.lrp.PaymentCreated.is(event));
+            const payment_hash = result.event.data[0].toString();
+            resolve(payment_hash);
           } 
         }).catch((err) => {
           reject(err);
@@ -112,7 +114,7 @@ export class Libra {
       this.api.tx.lrp
         .acceptPayment(paymentHash)
         .signAndSend(fromAcct, (status) => {
-          if (status.isFinalized) {
+          if (status.isInBlock) {
             resolve();
           } 
         }).catch((err) => {
@@ -136,7 +138,7 @@ export class Libra {
       this.api.tx.lrp
         .rejectPayment(paymentHash)
         .signAndSend(fromAcct, (status) => {
-          if (status.isFinalized) {
+          if (status.isInBlock) {
             resolve();
           } 
         }).catch((err) => {
@@ -160,7 +162,7 @@ export class Libra {
       this.api.tx.lrp
         .acceptPayment(paymentHash)
         .signAndSend(fromAcct, (status) => {
-          if (status.isFinalized) {
+          if (status.isInBlock) {
             resolve();
           } 
         }).catch((err) => {
@@ -184,7 +186,7 @@ export class Libra {
       this.api.tx.lrp
         .cancelPayment(paymentHash)
         .signAndSend(fromAcct, (status) => {
-          if (status.isFinalized) {
+          if (status.isInBlock) {
             resolve();
           } 
         }).catch((err) => {

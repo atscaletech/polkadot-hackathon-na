@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Image, Button, Input, Form, Typography, PageHeader, Divider, Space, InputNumber, Select, notification } from 'antd';
 import { ShoppingOutlined } from '@ant-design/icons';
-import { getProduct } from "../../services/api";
+import { getProduct, createOrder } from "../../services/api";
 import { getAccounts, Libra } from "../../services/libra";
 
 const { Option } = Select;
@@ -48,7 +48,7 @@ export default function Checkout() {
     let libra = await Libra.init();
 
     try {
-      await libra.createPayment(
+      return await libra.createPayment(
         selectedAccountAddress,
         merchant_address,
         product.price * quantity,
@@ -56,22 +56,42 @@ export default function Checkout() {
         "libra_checkout_description",
         "libra_checkout_receipt",
       );
-      return true;
     } catch(err) {
-      notification.error({
-        message: 'Transaction Failed',
-        description: err.message,
-      });
-      return false;
+      throw err;
     }
   }
 
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
-    const isSuccess = await createPayment();
-    if (isSuccess) {
+
+    try {
+      const payment_hash = await createPayment();
+      console.log('Payment hash:', payment_hash);
+    
+      await createOrder(merchant_address, {
+        items: [
+          {
+            product_title: product.title,
+            price: product.price,
+            currency: product.currency,
+            quantity,
+            amount: quantity * product.price,
+          }
+        ],
+        total_amount: quantity * product.price,
+        currency: product.currency,
+        status: "Pending",
+        payment_hash,
+      });
+
       navigate('/shop/checkout/success');
+    } catch (err) {
+      notification.error({
+        message: 'Transaction Failed',
+        description: err.message,
+      });
     }
+
     setIsPlacingOrder(false);
   };
 
@@ -80,7 +100,7 @@ export default function Checkout() {
     if (accounts.length === 0) {
       connectWallet();
     }
-    console.log("Fire side effects!");
+    // eslint-disable-next-line
   }, []);
 
   return (
