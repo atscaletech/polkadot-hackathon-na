@@ -10,7 +10,6 @@ const { Paragraph } = Typography;
 export default function Products() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [visible, setVisible] = useState(false);
 
   let fetchProducts = async () => {
     const result = await getProducts();
@@ -34,18 +33,10 @@ export default function Products() {
         {
           products.map((product) => <Col span={8}>
             <Card
+              key={product.id}
               cover={
                 <>
-                  <Image
-                    preview={{ visible: false }}
-                    src={product.images[0].url}
-                    onClick={() => setVisible(true)}
-                  />
-                  <div style={{ display: 'none' }}>
-                    <Image.PreviewGroup preview={{ visible, onVisibleChange: vis => setVisible(vis) }}>
-                      { product.images.map(image => <Image key={image.url} src={image.url}/>)}
-                    </Image.PreviewGroup>
-                  </div>
+                  <Image src={product.images[0].url}/>
                 </>
               }
               actions={[
@@ -66,7 +57,7 @@ export default function Products() {
                 title={product.title} 
                 description={
                   <>
-                    <Paragraph strong>${product.price} {product.currency.symbol}</Paragraph>
+                    <Paragraph strong>{product.price} {product.currency.symbol}</Paragraph>
                     <Paragraph>{product.description}</Paragraph>
                   </>
                 }

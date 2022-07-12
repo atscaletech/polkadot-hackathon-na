@@ -31,6 +31,7 @@ export default function SelectAccount() {
     setIsLoading(false);
   };
 
+  // eslint-disable-next-line
   useEffect(() => { connectWallet() }, []);
 
   const redirectToExtensionPage = () => {
