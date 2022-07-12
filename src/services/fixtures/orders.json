@@ -11,7 +11,7 @@
         "price": 2,
         "currency": {
           "symbol": "Dot",
-          "id": ""
+          "id": "Native"
         },
         "quantity": 2,
         "amount": 2
@@ -20,7 +20,7 @@
     "total_amount": 2,
     "currency": {
       "symbol": "Dot",
-      "id": ""
+      "id": "Native"
     },
     "status": "Completed",
     "payment_hash": ""
@@ -37,7 +37,7 @@
         "price": 100,
         "currency": {
           "symbol": "aUsd",
-          "id": ""
+          "id": "Native"
         },
         "quantity": 2,
         "amount": 200
@@ -46,7 +46,7 @@
     "total_amount": 200,
     "currency": {
       "symbol": "aUsd",
-      "id": ""
+      "id": "Native"
     },
     "status": "Pending",
     "payment_hash": ""
@@ -63,7 +63,7 @@
         "price": 2,
         "currency": {
           "symbol": "Dot",
-          "id": ""
+          "id": "Native"
         },
         "quantity": 2,
         "amount": 2
@@ -72,7 +72,7 @@
     "total_amount": 2,
     "currency": {
       "symbol": "Dot",
-      "id": ""
+      "id": "Native"
     },
     "status": "Cancelled",
     "payment_hash": ""
@@ -89,7 +89,7 @@
         "price": 2,
         "currency": {
           "symbol": ":Libra",
-          "id": ""
+          "id": "Native"
         },
         "quantity": 2,
         "amount": 2
@@ -115,7 +115,7 @@
         "price": 2,
         "currency": {
           "symbol": "BTC",
-          "id": ""
+          "id": "Native"
         },
         "quantity": 100,
         "amount": 100
@@ -124,7 +124,7 @@
     "total_amount": 2,
     "currency": {
       "symbol": "BTC",
-      "id": ""
+      "id": "Native"
     },
     "status": "Rejected",
     "payment_hash": ""

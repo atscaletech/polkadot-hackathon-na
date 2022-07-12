@@ -5,8 +5,9 @@ import ShopCheckout from './pages/customer/Checkout';
 import CheckoutSuccess from './pages/customer/CheckoutSuccess';
 
 import MerchantOrders from './pages/merchants/Orders';
+import SelectAccount from './pages/merchants/SelectAccount';
 
-export default [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -36,5 +37,13 @@ export default [
     name: 'MerchantOrders',
     element: MerchantOrders,
     exact: true,
+  },
+  {
+    path: '/merchant/select-account',
+    name: 'SelectAccount',
+    element: SelectAccount,
+    exact: true,
   }
 ]
+
+export default routes;

@@ -2,7 +2,7 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import { web3Accounts, web3Enable, web3FromSource } from '@polkadot/extension-dapp';
 import keyring from '@polkadot/ui-keyring';
-import { formatBalance } from '@polkadot/util';
+// import { formatBalance } from '@polkadot/util';
 
 const RPC = 'wss://rpc.libra.atscale.xyz';
 
@@ -121,6 +121,30 @@ export class Libra {
     })
   }
 
+  async rejectPayment(
+    accountAddress,
+    paymentHash,
+  ) {
+    const pair = keyring.getAccount(accountAddress);
+    const { fromAcct, signer } = await getFromAcct(pair);
+
+    if (signer) {
+      this.api.setSigner(signer);
+    }
+
+    return new Promise((resolve, reject) => {
+      this.api.tx.lrp
+        .rejectPayment(paymentHash)
+        .signAndSend(fromAcct, (status) => {
+          if (status.isFinalized) {
+            resolve();
+          } 
+        }).catch((err) => {
+          reject(err);
+        });
+    })
+  }
+
   async fulfillPayment(
     accountAddress,
     paymentHash,
@@ -135,6 +159,30 @@ export class Libra {
     return new Promise((resolve, reject) => {
       this.api.tx.lrp
         .acceptPayment(paymentHash)
+        .signAndSend(fromAcct, (status) => {
+          if (status.isFinalized) {
+            resolve();
+          } 
+        }).catch((err) => {
+          reject(err);
+        });
+    })
+  }
+
+  async cancelPayment(
+    accountAddress,
+    paymentHash,
+  ) {
+    const pair = keyring.getAccount(accountAddress);
+    const { fromAcct, signer } = await getFromAcct(pair);
+
+    if (signer) {
+      this.api.setSigner(signer);
+    }
+
+    return new Promise((resolve, reject) => {
+      this.api.tx.lrp
+        .cancelPayment(paymentHash)
         .signAndSend(fromAcct, (status) => {
           if (status.isFinalized) {
             resolve();
