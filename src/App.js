@@ -28,6 +28,7 @@ export default function App() {
       <Content 
         style={{
           maxWidth: "1280px",
+          width: '100%',
           marginLeft: "auto",
           marginRight: "auto",
         }}

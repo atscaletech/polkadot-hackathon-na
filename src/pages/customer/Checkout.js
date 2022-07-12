@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Image, Button, Input, Form, Typography, PageHeader, Divider, Space, InputNumber, Select, notification } from 'antd';
 import { ShoppingOutlined } from '@ant-design/icons';
+import Loading from '../../components/Loading';
 import { getProduct, createOrder } from "../../services/api";
 import { getAccounts, Libra } from "../../services/libra";
 
@@ -22,18 +23,26 @@ export default function Checkout() {
   const [accounts, setAccounts] = useState([]);
   const [selectedAccountAddress, setSelectedAccountAddress] = useState(null);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [name, setName] = useState('Default Name');
+  const [address, setAddress] = useState('Default Address');
+  const [postalCode, setPostalCode] = useState('Default Postal Code');
+  const [email, setEmail] = useState('hello@atscale.xyz');
 
   const productId = query.get('product_id');
+  const merchant_address = query.get('merchant_address');
   if (!productId) {
-    navigate('/shop');
+    navigate(`/shop?merchant_address=${merchant_address}`);
   }
-  const merchant_address = '5DCYwekH6i69DfHBDeYmQHdzzBGghVFCgdENd2tmf6JBs5kR';
 
   let fetchProduct = async () => {
+    setIsLoading(true);
     const result = await getProduct(productId);
     if (result) {
       setProduct(result);
     }
+    setIsLoading(false);
   };
 
   const connectWallet = async () => {
@@ -66,9 +75,15 @@ export default function Checkout() {
 
     try {
       const payment_hash = await createPayment();
-      console.log('Payment hash:', payment_hash);
     
       await createOrder(merchant_address, {
+        customer: {
+          name,
+          address,
+          postalCode,
+          email,
+          wallet: selectedAccountAddress,
+        },
         items: [
           {
             product_title: product.title,
@@ -105,6 +120,7 @@ export default function Checkout() {
 
   return (
     <>
+      <Loading isLoading={isLoading}/>
       <PageHeader
         onBack={() => navigate('/shop')}
         title="Checkout"
@@ -140,7 +156,6 @@ export default function Checkout() {
                   />
                 </Col>
               </Row>
-              <Divider/>
               <Row>
                 <Col span={6}>
                   <Paragraph strong>Total:</Paragraph>
@@ -166,22 +181,18 @@ export default function Checkout() {
         </Col>
         <Col span={12} style={{ padding: '8px 32px'}}>
           <Title level={4}>Delivery Information</Title>
-          <Paragraph>This is work in progress </Paragraph>
           <Form layout='vertical'>
             <Form.Item label="Name">
-              <Input readOnly disabled value='Andrew'/>
+              <Input value={name} onChange={(e) => setName(e.target.value)}/>
             </Form.Item>
             <Form.Item label="Address">
-              <Input readOnly disabled value='68 Circular Road , #02-01 , Singapore'/>
+              <Input value={address} onChange={(e) => setAddress(e.target.value)}/>
             </Form.Item>
             <Form.Item label="Postal Code">
-              <Input readOnly disabled value='+049422'/>
+              <Input value={postalCode} onChange={(e) => setPostalCode(e.target.value)}/>
             </Form.Item>
-            <Form.Item
-              style={{ flex: '1 0 0' }}
-              label="Email"
-            >
-              <Input readOnly disabled value='hello@atscale.xyz'/>
+            <Form.Item label="Email">
+              <Input value={email} onChange={(e) => setEmail(e.target.value)}/>
             </Form.Item>
             <Space style={{ width: '100%', justifyContent: 'flex-end'}} align='end'>
               <Button

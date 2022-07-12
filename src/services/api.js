@@ -19,7 +19,10 @@ export async function getProduct(productId) {
 
 export async function getOrders(merchantAddress) {
   const response = await instance.get('/b/62cd4ed8b34ef41b73ba2d2f');
-  return response.data.record.orders.filter(item => item.merchant === merchantAddress);
+  if (merchantAddress) {
+    return response.data.record.orders.filter(item => item.merchant === merchantAddress);
+  }
+  return response.data.record.orders;
 }
 
 export async function createOrder(merchantAddress, order) {
@@ -46,4 +49,10 @@ export async function updateOrder(orderId, data) {
   };
 
   return instance.put('/b/62cd4ed8b34ef41b73ba2d2f', record);
+}
+
+export async function getDefaultMerchant() {
+  const response = await instance.get('/b/62cd9621b34ef41b73baa565');
+
+  return response.data.record.default_merchant;
 }

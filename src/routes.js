@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import ShopProducts from './pages/customer/Products';
 import ShopCheckout from './pages/customer/Checkout';
 import CheckoutSuccess from './pages/customer/CheckoutSuccess';
+import OrdersHistory from './pages/customer/History';
 
 import MerchantOrders from './pages/merchants/Orders';
 import SelectAccount from './pages/merchants/SelectAccount';
@@ -30,6 +31,12 @@ const routes = [
     path: '/shop/checkout/success',
     name: 'CheckoutSuccess',
     element: CheckoutSuccess,
+    exact: true,
+  },
+  {
+    path: '/shop/order-history',
+    name: 'OrderHistory',
+    element: OrdersHistory,
     exact: true,
   },
   {

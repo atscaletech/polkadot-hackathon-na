@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { Button, Space, Typography, Select, Spin } from 'antd';
+import { Button, Space, Typography, Select } from 'antd';
+import Loading from '../../components/Loading';
 import { getAccounts } from "../../services/libra";
 
 const { Title } = Typography;
@@ -31,21 +31,19 @@ export default function SelectAccount() {
     setIsLoading(false);
   };
 
-  // eslint-disable-next-line
-  useEffect(() => { connectWallet() }, []);
+
+  useEffect(() => {
+    connectWallet();
+    // eslint-disable-next-line
+  }, []);
 
   const redirectToExtensionPage = () => {
     window.location.href = 'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd';
   };
 
   return (
-      <Space size='large' direction='vertical' style={{ height: '480px', justifyContent: 'center' }}>
-        {
-          isLoading && 
-          <div style={{ position: 'fixed', background: '#F7F7F7', height: '100vh', width: '100vw', top: '0', left: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
-            <Spin indicator={<LoadingOutlined style={{ fontSize: 32 }} spin />}/>
-          </div>
-        }
+      <Space size='large' direction='vertical' style={{ width: '100%', alignItems: 'center', height: '480px', justifyContent: 'center' }}>
+        <Loading isLoading={isLoading}/>
         {
           accounts.length === 0 && <>
             <Title level={4}>Please install the PolkadotJs extension before using the merchant dashboard.</Title>
@@ -64,7 +62,7 @@ export default function SelectAccount() {
         }
         {
           accounts.length > 0 && <>
-            <Title level={4}>Please select your merchant wallet?</Title>
+            <Title level={4}>Please select your merchant account?</Title>
             <Select
               style={{ minWidth: '240px', width: '100%' }}
               value={selectedAccountAddress}
