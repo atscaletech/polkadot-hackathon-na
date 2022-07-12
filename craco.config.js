@@ -26,7 +26,7 @@ module.exports = {
           lessOptions: {
             modifyVars: {
               '@primary-color': '#04472D',
-              '@link-color': '#BCA9F1',
+              '@link-color': '#04472D',
               '@success-color': '#32C25E',
               '@warning-color': '#FA554D',
             },

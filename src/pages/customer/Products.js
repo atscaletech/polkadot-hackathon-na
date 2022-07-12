@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, Row, Col, Image, Button, Typography, PageHeader } from 'antd';
 import { ShoppingOutlined } from '@ant-design/icons';
+import Loading from '../../components/Loading';
 import { getProducts } from "../../services/api";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export default function Products() {
   const navigate = useNavigate();
+  const query = useQuery();
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const merchant = query.get('merchant_address');
 
   let fetchProducts = async () => {
+    setIsLoading(true);
     const result = await getProducts();
     setProducts(result);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -21,19 +34,19 @@ export default function Products() {
   }, []);
 
   const checkoutProduct = (productId) => {
-    navigate(`/shop/checkout?product_id=${productId}`)
+    navigate(`/shop/checkout?product_id=${productId}&merchant_address=${merchant}`)
   }
 
   return (
     <div>
+      <Loading isLoading={isLoading}></Loading>
       <PageHeader
         title="Products"
       />
-      <Row gutter={24}>
+      <Row gutter={24} style={{ paddingLeft: '32px', paddingRight: '32px' }}>
         {
-          products.map((product) => <Col span={8}>
+          products.map((product) => <Col key={product.id} span={8}>
             <Card
-              key={product.id}
               cover={
                 <>
                   <Image src={product.images[0].url}/>
