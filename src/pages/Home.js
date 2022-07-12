@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Divider, Space, Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 

@@ -146,6 +146,7 @@ export default function Checkout() {
         </Col>
         <Col span={12} style={{ padding: '8px 32px'}}>
           <Title level={4}>Delivery Information</Title>
+          <Paragraph>This is work in progress </Paragraph>
           <Form layout='vertical'>
             <Form.Item label="Name">
               <Input readOnly disabled value='Andrew'/>
