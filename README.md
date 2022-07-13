@@ -12,7 +12,7 @@
 
 
 ## Submissions 
-- Pitch Video: TBD
+- Pitch Video: https://youtu.be/028gs1xkolA
 - Live running substrate chain: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frpc.libra.atscale.xyz#/explorer
 - Live running demo web app: https://app.libra.atscale.xyz
 - Pitch Deck: https://pitch.com/public/77f68d58-197e-4e23-9f6a-c2da1ba19fba
