@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { Row, Col, Image, Button, Input, Form, Typography, PageHeader, Divider, Space, InputNumber, Select, notification } from 'antd';
+import { Row, Col, Image, Button, Input, Form, Typography, PageHeader, Divider, Space, InputNumber, Alert, Select, notification } from 'antd';
 import { ShoppingOutlined } from '@ant-design/icons';
 import Loading from '../../components/Loading';
 import { getProduct, createOrder } from "../../services/api";
@@ -25,9 +25,9 @@ export default function Checkout() {
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [name, setName] = useState('Default Name');
-  const [address, setAddress] = useState('Default Address');
-  const [postalCode, setPostalCode] = useState('Default Postal Code');
+  const [name, setName] = useState('Your Name');
+  const [address, setAddress] = useState('Your Address');
+  const [postalCode, setPostalCode] = useState('Your Postal Code');
   const [email, setEmail] = useState('hello@atscale.xyz');
 
   const productId = query.get('product_id');
@@ -118,6 +118,15 @@ export default function Checkout() {
     // eslint-disable-next-line
   }, []);
 
+  console.log('Foo');
+
+  const errorMessage = (() => {
+    if (accounts.length === 0) {
+      return 'There is no PolkadotJs Extension in your browser.'
+    }
+    return null;
+  })();
+
   return (
     <>
       <Loading isLoading={isLoading}/>
@@ -194,6 +203,14 @@ export default function Checkout() {
             <Form.Item label="Email">
               <Input value={email} onChange={(e) => setEmail(e.target.value)}/>
             </Form.Item>
+            {
+              errorMessage &&  
+              <Alert
+                style={{ marginTop: '16px', marginBottom: '16px' }}
+                description={errorMessage}
+                type="error"
+              />
+            }
             <Space style={{ width: '100%', justifyContent: 'flex-end'}} align='end'>
               <Button
                 type='primary'
@@ -202,7 +219,8 @@ export default function Checkout() {
                 icon={<ShoppingOutlined />}
                 loading={isPlacingOrder}
                 onClick={onPlaceOrder}
-              >Place order</Button>
+                disabled={!!errorMessage}
+              >{ isPlacingOrder ? 'Placing order' : 'Place order'}</Button>
             </Space>
           </Form>
         </Col>
