@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getOrders, updateOrder } from "../../services/api";
 import { Libra, getAccounts } from '../../services/libra';
 import { formatOrderId } from '../../utils/formatter';
+import Loading from '../../components/Loading';
 
-const tableData = (orders, accountAddress) => orders.map((order) => ({
+const tableData = (orders, accountAddress, onReload) => orders.map((order) => ({
   key: order.id,
   order_id: order.id,
   customer_name: order.customer.name,
@@ -14,6 +15,7 @@ const tableData = (orders, accountAddress) => orders.map((order) => ({
   amount: `${order.total_amount} ${order.currency.symbol}`,
   status: order.status,
   accountAddress: accountAddress,
+  onReload,
 }));
 
 const ACCEPT_PAYMENT = 'accept_payment';
@@ -56,6 +58,8 @@ function OrderActions({ record }) {
           status: 'Accepted',
         });
         setIsLoading(false);
+        setAction(null);
+        record.onReload();
         return;
       }
 
@@ -72,6 +76,8 @@ function OrderActions({ record }) {
           status: 'Rejected',
         });
         setIsLoading(false);
+        setAction(null);
+        record.onReload();
         return;
       }
 
@@ -88,6 +94,8 @@ function OrderActions({ record }) {
           status: 'Fulfilled',
         });
         setIsLoading(false);
+        setAction(null);
+        record.onReload();
         return;
       }
 
@@ -104,6 +112,8 @@ function OrderActions({ record }) {
           status: 'Cancelled',
         });
         setIsLoading(false);
+        setAction(null);
+        record.onReload();
         return;
       }
 
@@ -212,6 +222,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const query = useQuery();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const accountAddress = query.get('account_address');
   if (!accountAddress) {
@@ -219,8 +230,10 @@ export default function Orders() {
   }
 
   let fetchOrders = async () => {
+    setIsLoading(true);
     const result = await getOrders(accountAddress);
     setOrders(result);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -233,10 +246,11 @@ export default function Orders() {
 
   return (
     <div>
+      <Loading isLoading={isLoading}></Loading>
       <PageHeader
         title="Orders"
       />
-      <Table columns={columns} dataSource={tableData(orders, accountAddress)}>
+      <Table columns={columns} dataSource={tableData(orders, accountAddress, fetchOrders)}>
       </Table>
     </div>
   )
