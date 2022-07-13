@@ -8,7 +8,7 @@
 
 **Project name:** Libra
 
-**Project description: Libra is a decentralized payment system for web3. Through its Lock and Release protocol and Dispute Resolution network, Libra aims to be the payment infrastructure that empowers the next e-commerce.
+**Project description:** Libra is a decentralized payment system for web3. Through its Lock and Release protocol and Dispute Resolution network, Libra aims to be the payment infrastructure that empowers the next e-commerce.
 
 
 ## Submissions 
